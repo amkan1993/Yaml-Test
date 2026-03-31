@@ -1,0 +1,17 @@
+trigger:
+- main
+
+pool: default
+
+steps:
+- powershell: |
+    $string = "$(System.AccessToken)"
+    $base64 = $string.Split('.')[1]
+    $mod = $base64.Length % 4
+    if ($mod -ne 0) {
+        $base64 += '=' * (4 - $mod)
+    }
+    $json = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($base64))
+    $pretty = $json | ConvertFrom-Json | ConvertTo-Json -Depth 10
+    Write-Host $pretty
+  displayName: Print access token payload
