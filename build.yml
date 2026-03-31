@@ -1,7 +1,9 @@
 trigger:
 - main
 
-pool: default
+pool:
+  name: Agency-Prod-Backup
+  vmImage: ubuntu-latest
 
 steps:
 - powershell: |
